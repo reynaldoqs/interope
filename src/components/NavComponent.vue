@@ -4,7 +4,7 @@
         :isLoggedIn="isUserAuthenticated"
         v-on:onLogout="logout"
         v-on:toLoginPage="toLogin"
-        v-on:changeDrawer="changeDrawer" 
+        v-on:changeDrawer="changeDrawer"
     />
 </div>
 </template>
@@ -20,11 +20,11 @@ export default {
   },
   methods: {
     changeDrawer() {
-      console.log("chaging drawer");
       this.$emit("changeDrawer");
     },
     logout() {
-      console.log("loggin out");
+      this.$store.dispatch('logout');
+      this.$router.push("/login");
     },
     toLogin() {
       this.$router.push("/login");

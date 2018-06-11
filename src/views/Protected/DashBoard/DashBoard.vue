@@ -1,35 +1,21 @@
 <template>
-  <v-app>
-    <v-navigation-drawer
+<v-app>
+  <v-navigation-drawer
     width="200"
-      persistent
-      :mini-variant="miniVariant"
-      v-model="drawer"
-      enable-resize-watcher
-      fixed
-      app
-      dark
-    >
-      <v-list>
-        <v-list-tile
-          value="true"
-          v-for="(item, i) in items"
-          :key="i"
-        >
-          <v-list-tile-action>
-            <v-icon v-html="item.icon"></v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title v-text="item.title"></v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
+    persistent
+    v-model="drawer"
+    enable-resize-watcher
+    fixed
+    app
+    dark
+  >
+    <SideBarComponent/>
     </v-navigation-drawer>
-      <NavComponent v-on:changeDrawer="drawer = !drawer"/>
-    <v-content>
-      <h1>This is the main content</h1>
+    <NavComponent v-on:changeDrawer="changeDrawer" />
+    <v-content class="my-v-content">
+      <router-view/>
     </v-content>
-  </v-app>
+</v-app>
 </template>
 
 <script>
@@ -39,19 +25,7 @@ import CatalogoComponent from "@/components/CatalogoComponent";
 export default {
   data() {
     return {
-      drawer: false,
-      fixed: false,
-      miniVariant: false,
-      items: [
-        {
-          icon: "bubble_chart",
-          title: "Inspire"
-        },
-        {
-          icon: "person",
-          title: "Persons"
-        }
-      ]
+      drawer: false
     };
   },
   components: {
@@ -59,7 +33,11 @@ export default {
     SideBarComponent,
     CatalogoComponent
   },
-  mounted() {}
+  methods: {
+    changeDrawer() {
+      this.drawer = !this.drawer;
+    }
+  }
 };
 </script>
 
@@ -78,5 +56,8 @@ export default {
 
 .main-container {
   width: 100%;
+}
+.my-v-content{
+  background-color: #dfd2bb;
 }
 </style>

@@ -12,7 +12,6 @@ body {
   font-family: "Roboto", sans-serif;
   width: 100%;
   height: 100vh;
-  overflow: hidden;
 }
 
 *,
@@ -20,17 +19,31 @@ body {
 *::before {
   box-sizing: border-box;
 }
+
 /* Vuetify styles */
+
 body .toolbar {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
 }
+
 body .menu__content {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
 }
+
 /* Nav-View styles - vuetify */
+
 .my-buttons .btn {
   text-transform: initial;
   font-weight: normal;
   color: var(--inter-text-primary);
   font-size: 1.1rem;
+}
+
+body .table.table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+body .elevation-3 {
+  border-radius: 10px;
 }

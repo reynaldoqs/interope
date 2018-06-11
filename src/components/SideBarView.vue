@@ -1,31 +1,40 @@
 <template>
-<div class="side-bar-view">
-    <pre>
-        Usuario:
-        detalles:
-        nombre: {{user.nombres}},
-        primer apellido: {{user.primerApellido}},
-        rol: {{user.rol}}
-        </pre>
+<div class="side-var-view">
+  <v-list>
+    <v-list-tile
+      value="true"
+      v-for="(item, i) in items"
+      :key="i"
+    >
+      <v-list-tile-action>
+        <v-icon v-html="item.icon"></v-icon>
+      </v-list-tile-action>
+      <v-list-tile-content>
+        <v-list-tile-title v-text="item.title"></v-list-tile-title>
+      </v-list-tile-content>
+      </v-list-tile>
+  </v-list>
 </div>
 </template>
 
-
 <script>
 export default {
-  props: ["user"]
+  data() {
+    return {
+      items: [{
+          icon: "bubble_chart",
+          title: "Inspire"
+        },
+        {
+          icon: "person",
+          title: "Persons"
+        }
+      ]
+    }
+  }
 };
 </script>
 
-
-
 <style scoped>
-.side-bar-view {
-  padding: 150px 0;
-  text-align: left;
-  width: 200px;
-  background-color: white;
-  height: 100%;
-  overflow: hidden;
-}
+
 </style>

@@ -1,6 +1,6 @@
 <template>
 <div class="side-bar-component">
-    <SideBarView :user="user" />
+    <SideBarView/>
 </div>
 </template>
 
