@@ -27,3 +27,10 @@ body .toolbar {
 body .menu__content {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
 }
+/* Nav-View styles - vuetify */
+.my-buttons .btn {
+  text-transform: initial;
+  font-weight: normal;
+  color: var(--inter-text-primary);
+  font-size: 1.1rem;
+}
