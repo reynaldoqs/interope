@@ -14,11 +14,11 @@
        </v-avatar>
       <h2>{{servicio.sigla}}</h2>
       <div class="my-icons">
-     <v-tooltip top :key="0">
+     <v-tooltip top>
         <v-icon  slot="activator">subject</v-icon>
         <span>Con documento</span>
      </v-tooltip>
-     <v-tooltip top :key="0">
+     <v-tooltip top>
         <v-icon class="active" slot="activator">fiber_manual_record</v-icon>
         <span>Activado</span>
      </v-tooltip>

@@ -3,14 +3,16 @@
   <v-list>
     <v-list-tile
       value="true"
-      v-for="(item, i) in items"
+      v-for="(link, i) in links"
       :key="i"
     >
       <v-list-tile-action>
-        <v-icon v-html="item.icon"></v-icon>
+        <v-icon v-html="link.icon"></v-icon>
       </v-list-tile-action>
       <v-list-tile-content>
-        <v-list-tile-title v-text="item.title"></v-list-tile-title>
+        <router-link :to="link.to">
+          <v-list-tile-title v-text="link.title"></v-list-tile-title>
+        </router-link>
       </v-list-tile-content>
       </v-list-tile>
   </v-list>
@@ -21,13 +23,34 @@
 export default {
   data() {
     return {
-      items: [{
-          icon: "bubble_chart",
-          title: "Inspire"
+      links: [{
+          icon: "supervised_user_circle",
+          title: "Usuarios",
+          to:"/admin/usuarios"
         },
         {
-          icon: "person",
-          title: "Persons"
+          icon: "meeting_room",
+          title: "Ambientes",
+          to: "/admin/ambientes"
+        },
+        {
+          icon: "poll",
+          title: "Servicios",
+          to: "/admin/servicios"
+        },{
+          icon: "router",
+          title: "Rutas",
+          to: "/admin/rutas"
+        },
+        {
+          icon: "location_city",
+          title: "Entidades",
+          to: "/admin/entidades",
+        },
+        {
+          icon: "notifications_active",
+          title: "Noticias",
+          to: "/admin/noticias"
         }
       ]
     }

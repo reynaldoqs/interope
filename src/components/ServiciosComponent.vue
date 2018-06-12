@@ -10,10 +10,19 @@
     <v-progress-linear slot="progress" color="red" indeterminate></v-progress-linear>
 
     <template slot="items" slot-scope="props">
-      <td>{{ props.item.siglaEntidad }}</td>
-      <td class="text-xs-left">{{ props.item.desEntidad }}</td>
-      <td class="text-xs-center estado" v-bind:class="{conectado:isConected}">{{ props.item.estado }}</td>
-      <td class="text-xs-center">{{ props.item.id }}</td>
+      <td>{{ props.item.datosEntidad.siglaEntidad }}</td>
+      <td class="text-xs-left">{{ props.item.datosEntidad.descripcionEntidad }}</td>
+      <td class="text-xs-left">{{ props.item.codigo }}</td>
+      <td class="text-xs-center">{{ props.item.estado }}</td>
+      <td class="text-xs-center">{{ props.item.fechaRegistro | normalDate }}</td>
+      <td class="justify-center layout px-0">
+          <v-btn icon class="mx-0" @click="editItem(props.item.id)">
+            <v-icon color="teal">edit</v-icon>
+          </v-btn>
+          <v-btn icon class="mx-0" @click="deleteItem(props.item.id)">
+            <v-icon color="pink">delete</v-icon>
+          </v-btn>
+        </td>
     </template>
     <template slot="footer">
       <td colspan="100%">
@@ -35,7 +44,7 @@
   </div>
 </template>
 <script>
-import { getServicios } from '../services/serviciosService';
+import { getServicios } from '@/services/serviciosService';
 export default {
   data(){
     return{
@@ -47,14 +56,14 @@ export default {
       servicios:[],
       headers:[
         {
-          text: 'Sigla Entidad',
-          align: 'left',
-          sortable: false,
+          text: 'Sigla Entidad', align: 'left', sortable: true,
           value: 'siglaEntidad'
         },
-        {text: 'Descripción', value:'desEntidad', align:'center'},
-        {text: 'Estado', value:'estado',align:'center'},
-        {text: 'ID', value:'id',align:'center'}
+        {text: 'Descripción', value:'descripcion', align:'left', sortable: false},
+        {text: 'Codigo', value:'codigo',align:'center', sortable: false},
+        {text: 'Estado', value:'estado',align:'center', sortable: false},
+        {text: 'Fecha Registro', value: 'FechaRegistro', align: 'center', sortable: true},
+        { text: 'Acciones', value: 'name', sortable: false }
       ],
 
     }
@@ -74,6 +83,13 @@ export default {
     }
   },
   methods:{
+    editItem(id){
+      this.$router.push(`/admin/servicios/edit/${id}`)
+    },
+    deleteItem(id){
+        console.log(id);
+    }
+    ,
     updatedPagination(){
       this.loading = true;
       getServicios(10,this.pagination.page).then(data => {

@@ -1,11 +1,13 @@
-//import axios from "axios";
+import axios from "axios";
 import {
   AUTH_REQUEST,
   AUTH_ERROR,
   AUTH_SUCCESS,
   AUTH_LOGOUT
 } from "../actions/auth";
-import { serviceLogin } from "@/services/loginService";
+import {
+  serviceLogin
+} from "@/services/loginService";
 
 const state = {
   user: localStorage.getItem("user") || "",
@@ -43,8 +45,9 @@ const actions = {
       serviceLogin(creds)
         .then(data => {
           let user = data.data;
-          context.commit(AUTH_SUCCESS, user);
           localStorage.setItem("user", JSON.stringify(user));
+          axios.defaults.headers.common["Authorization"] = user.accesos.token;
+          context.commit(AUTH_SUCCESS, user);
           resolve("Login Success");
         })
         .catch(err => {
@@ -55,36 +58,9 @@ const actions = {
   },
   logout: context => {
     localStorage.removeItem("user");
+    axios.defaults.headers.common["Authorization"] = "";
     context.commit(AUTH_LOGOUT);
   }
-
-  // [AUTH_REQUEST]: ({ commit, dispatch }, user) => {
-  //   return new Promise((resolve, reject) => {
-  //     commit(AUTH_REQUEST);
-  //     axios
-  //       .post(BASE_URL, user)
-  //       .then(data => {
-  //         console.log("here is de user");
-  //         console.log(data.data.accesos.token);
-  //         localStorage.setItem("user-token", data.data.accesos.token);
-  //         commit(AUTH_SUCCESS, data);
-  //         dispatch(USER_REQUEST);
-  //         resolve(data);
-  //       })
-  //       .catch(err => {
-  //         commit(AUTH_ERROR, err);
-  //         localStorage.removeItem("user-token");
-  //         reject(err);
-  //       });
-  //   });
-  // },
-  // [AUTH_LOGOUT]: ({ commit, dispatch }) => {
-  //   return new Promise((resolve, reject) => {
-  //     commit(AUTH_LOGOUT);
-  //     localStorage.removeItem("user-token");
-  //     resolve();
-  //   });
-  // }
 };
 
 export default {

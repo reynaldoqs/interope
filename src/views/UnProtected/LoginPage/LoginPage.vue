@@ -33,7 +33,7 @@ export default {
     login(creds) {
       this.$store
         .dispatch("login", creds)
-        .then(() => this.$router.push("/dashboard"));
+        .then(() => this.$router.push("/admin"));
     }
   },
   computed: {

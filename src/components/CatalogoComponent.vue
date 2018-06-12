@@ -12,7 +12,7 @@
         v-for="(servicio, index) in servicios"
         :key="index"
       >
-        <a-card :servicio="servicio" />
+        <a-card :servicio="servicio"/>
         </v-flex>
 
         </v-layout>

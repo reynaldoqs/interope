@@ -57,7 +57,7 @@ export default {
 .main-container {
   width: 100%;
 }
-.my-v-content{
-  background-color: #dfd2bb;
+.my-v-content {
+  background-color: #e0e0e0;
 }
 </style>
