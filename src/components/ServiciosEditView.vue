@@ -1,56 +1,53 @@
 <template>
-  <div class="edit-view">
-        <div class="my-container"></div>
-    <v-container align-center>
-         <v-layout wrap>
-          <v-flex sm12 align-content-center>
-            <h1>Cambiar Datos</h1>
-          </v-flex>
-         </v-layout>
-     <v-layout wrap>
-       <v-flex xs12 sm6>
- <v-form ref="form" v-model="valid" lazy-validation>
-    <v-text-field
+<div class="edit-view">
+<v-container align-center class="my-container my-buttons">
+  <v-layout wrap>
+        <v-flex sm12  md6 lg4 align-content-center>
+            <v-btn outline round color="primary">Dar de baja</v-btn>
+        </v-flex>
+        <v-flex sm12  md6 lg4 align-content-center>
+            <h3>Cambiar datos</h3>
+        </v-flex>
+  </v-layout>
+  <div class="my-spacer"></div>
+
+  <v-form ref="form" v-model="valid" @submit.prevent="save" lazy-validation>
+    <v-layout wrap>
+
+    <v-flex sm12  md6 lg4 align-content-center class="my-padding-flex">
+    <v-text-field 
       v-model="servicio.codigo"
       label="Codigo"
       required
     ></v-text-field>
-    <v-text-field
-      v-model="servicio.descripcion"
-      label="Descripcion"
-      required
-    ></v-text-field>
+    </v-flex>
+
+    <v-flex sm12  md6 lg4 align-content-center class="my-padding-flex">
     <v-text-field
       v-model="servicio.estado"
       label="Estado"
       required
     ></v-text-field>
-        <v-select
-          v-model="servicio.protocolos"
-          :items="items"
-          label="Protocolos"
-          chips
-          tags
-        ></v-select>
-    <v-select
-      :items="servicio.ambientes"
-      label="Ambientes"
-      required
-    ></v-select>
+    </v-flex>
 
-    <v-btn
-      :disabled="!valid"
-      @click="submit"
-    >
-      submit
-    </v-btn>
-    <v-btn @click="clear">clear</v-btn>
-  </v-form>
-  </v-flex>
-    </v-layout>
-/* Para hacer prueba con ambientes */
-    <v-layout row wrap>
-      <v-flex xs12 sm6>
+    <v-flex sm12  md6 lg4 align-content-center class="my-padding-flex">
+    <v-text-field
+          name="input-7-1"
+          label="Label Text"
+    ></v-text-field>
+    </v-flex>
+
+    <v-flex sm12  md6 lg4 align-content-center class="my-padding-flex">
+    <v-text-field
+      v-model="servicio.descripcion"
+      label="Descripcion"
+      required
+      multi-line
+      rows=3
+    ></v-text-field>
+    </v-flex>
+
+    <v-flex sm12  md6 lg4 align-content-center class="my-padding-flex">
         <v-select
           :items="formatedAmbientes"
           v-model="servicio.ambientes"
@@ -88,11 +85,97 @@
             </template>
           </template>
         </v-select>
-      </v-flex>
-    </v-layout>
-     <button @click="hacer">Hacer la prueba</button>
+    </v-flex>
+
+    <v-flex sm12  md6 lg4 align-content-center class="my-padding-flex"> 
+        <v-select
+          v-model="servicio.protocolos"
+          :items="items"
+          label="Protocolos"
+          chips
+          tags
+        ></v-select>
+    </v-flex>
+
+    <v-flex sm12  md6 lg4 align-content-center class="my-padding-flex">
+      <v-menu
+        ref="menu1"
+        :close-on-content-click="false"
+        v-model="menu1"
+        :nudge-right="40"
+        :return-value.sync="servicio.fechaInicioDisponibilidad"
+        lazy
+        transition="scale-transition"
+        offset-y
+        full-width
+        min-width="290px"
+      >
+        <v-text-field
+          slot="activator"
+          v-model="servicio.fechaInicioDisponibilidad"
+          label="Fecha inicio disponibilidad"
+          prepend-icon="event"
+          readonly
+        ></v-text-field>
+        <v-date-picker v-model="servicio.fechaInicioDisponibilidad" @input="$refs.menu1.save(servicio.fechaInicioDisponibilidad)"></v-date-picker>
+      </v-menu>
+    </v-flex>
+
+   <v-flex sm12  md6 lg4 align-content-center class="my-padding-flex">
+      <v-menu
+        ref="menu2"
+        :close-on-content-click="false"
+        v-model="menu2"
+        :nudge-right="40"
+        :return-value.sync="servicio.fechaFinDisponibilidad"
+        lazy
+        transition="scale-transition"
+        offset-y
+        full-width
+        min-width="290px"
+      >
+        <v-text-field
+          slot="activator"
+          v-model="servicio.fechaFinDisponibilidad"
+          label="Fecha final disponibilidad"
+          prepend-icon="event"
+          readonly
+        ></v-text-field>
+        <v-date-picker v-model="servicio.fechaFinDisponibilidad" @input="$refs.menu2.save(servicio.fechaFinDisponibilidad)"></v-date-picker>
+      </v-menu>
+    </v-flex>
+   <v-flex sm12  md6 lg6 align-content-center>
+    <v-btn
+      round
+      type="submit"
+      :loading="loadingBtn"
+      :disabled="loadingBtn"
+      color="pink darken-4"
+      class="white--text">
+                    Guardar
+    <v-icon
+    right
+    dark>save</v-icon>
+    </v-btn>
+
+    <v-btn
+        round
+        @click="cancel"
+        :loading="loadingBtn"
+        :disabled="loadingBtn"
+        color="pink darken-4"
+        class="white--text">
+    Cancelar
+    <v-icon
+        right
+        dark>cancel</v-icon>
+    </v-btn>
+
+   </v-flex>
+  </v-layout>
+  </v-form>
 </v-container>
-  </div>
+</div>
 </template>
 <script>
 /* eslint-disable */ 
@@ -100,6 +183,8 @@ export default {
 
   data(){
     return {
+      menu1: false,
+      menu2: false,
       valid: true,
       select: null,
         items: [
@@ -110,6 +195,9 @@ export default {
     }
   },
   props: {
+    loadingBtn:{
+      type: Boolean
+    },
     servicio: {
       type:Object
     },
@@ -118,37 +206,16 @@ export default {
     }
 },
 methods: {
-  hacer(){
-    this.$emit("onHacer");
+  save(){
+    this.$emit("onSave");
   },
-    submit() {
-      /*         if (this.$refs.form.validate()) {
-                // Native form submission is not yet supported
-                axios.post('/api/submit', {
-                  name: this.name,
-                  email: this.email,
-                  select: this.select,
-                  checkbox: this.checkbox
-                })
-              } */
-    },
-    clear() {
-      this.$refs.form.reset();
-    }
+  cancel() {
+    this.$emit("onCancel");
+  }
 }
 }
 </script>
 <style scoped>
-.edit-view {
-  background-color: white;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 3px 6px rgba(0,0,0,.16);
-}
-.my-container{
-  height: 10px;
-  background-color: var(--inter-tertiary);
-}
   .my-ip{
     color: #8BC34A;
     margin-right: 5px;

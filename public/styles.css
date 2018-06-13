@@ -20,6 +20,26 @@ body {
   box-sizing: border-box;
 }
 
+.my-spacer {
+  width: 100%;
+  height: 10px;
+  background-color: var(--inter-tertiary);
+  margin: 10px 0;
+  opacity: .3;
+}
+
+.my-container {
+  background-color: white;
+}
+
+.my-auto-x-scroll {
+  overflow-x: auto;
+}
+
+.my-padding-flex {
+  padding: 5px 20px;
+}
+
 /* Vuetify styles */
 
 body .toolbar {
@@ -32,18 +52,13 @@ body .menu__content {
 
 /* Nav-View styles - vuetify */
 
+body .snack__wrapper {
+  background-color: var(--inter-primary);
+}
+
 .my-buttons .btn {
   text-transform: initial;
   font-weight: normal;
   color: var(--inter-text-primary);
   font-size: 1.1rem;
-}
-
-body .table.table {
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-body .elevation-3 {
-  border-radius: 10px;
 }

@@ -1,13 +1,28 @@
 <template>
-  <div class="entidades">
+<div class="entidades">
+    <v-container align-center class="my-container my-buttons">
+         <v-layout wrap>
+          <v-flex sm12  md6 lg4 align-content-center>
+            <v-btn outline round color="primary" @click="notification({message: 'we are the best', dangerous: true, time:1500})">Agregar Servicio</v-btn>
+          </v-flex>
+          <v-flex sm12  md6 lg4 align-content-center>
+            <v-text-field
+              @input = "value => buscarServicio(value)"
+              append-icon="search"
+              label="Buscar servicio"
+              hide-details
+            ></v-text-field>
+          </v-flex>
+  <div class="my-spacer"></div>
+<v-flex sm12 class="my-auto-x-scroll">
   <v-data-table
-    class="elevation-3"
     :headers="headers"
     :items="servicios"
     hide-actions
     :loading="loading"
+
   >
-    <v-progress-linear slot="progress" color="red" indeterminate></v-progress-linear>
+    <v-progress-linear slot="progress" height="2" color="secondary"></v-progress-linear>
 
     <template slot="items" slot-scope="props">
       <td>{{ props.item.datosEntidad.siglaEntidad }}</td>
@@ -16,35 +31,31 @@
       <td class="text-xs-center">{{ props.item.estado }}</td>
       <td class="text-xs-center">{{ props.item.fechaRegistro | normalDate }}</td>
       <td class="justify-center layout px-0">
+          <v-btn icon class="mx-0" @click="detailItem(props.item.id)">
+            <v-icon color="pink darken-4">visibility</v-icon>
+          </v-btn>
           <v-btn icon class="mx-0" @click="editItem(props.item.id)">
             <v-icon color="teal">edit</v-icon>
           </v-btn>
-          <v-btn icon class="mx-0" @click="deleteItem(props.item.id)">
-            <v-icon color="pink">delete</v-icon>
-          </v-btn>
         </td>
     </template>
-    <template slot="footer">
-      <td colspan="100%">
-        <strong>This is an extra footer</strong>
-      </td>
-    </template>
     <template slot="no-data">
-      <v-alert :value="true" color="error" icon="warning">
-        Sorry, nothing to display here :(
+      <v-alert slot="no-results"  outline :value="true" color="error" icon="warning">
+        No existen resultados para la busqueda.
       </v-alert>
     </template>
   </v-data-table>
+</v-flex>
       <div class="text-xs-center pt-2 my-paginator" @click="updatedPagination" v-if="pages > 1">
       <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
       </div>
-    <pre>
-      {{servicios}}
-    </pre>
-  </div>
+         </v-layout>
+    </v-container>
+</div>
 </template>
 <script>
-import { getServicios } from '@/services/serviciosService';
+import { getServicios, searchServicio } from '@/services/serviciosService';
+import { mapActions } from "vuex";
 export default {
   data(){
     return{
@@ -56,13 +67,13 @@ export default {
       servicios:[],
       headers:[
         {
-          text: 'Sigla Entidad', align: 'left', sortable: true,
+          text: 'Sigla Entidad', align: 'left', sortable: false,
           value: 'siglaEntidad'
         },
-        {text: 'Descripción', value:'descripcion', align:'left', sortable: false},
-        {text: 'Codigo', value:'codigo',align:'center', sortable: false},
+        {text: 'Descripción entidad', value:'descripcion', align:'left', sortable: true},
+        {text: 'Codigo', value:'codigo',align:'left', sortable: true},
         {text: 'Estado', value:'estado',align:'center', sortable: false},
-        {text: 'Fecha Registro', value: 'FechaRegistro', align: 'center', sortable: true},
+        {text: 'Fecha Registro', value: 'fechaRegistro', align: 'center', sortable: true},
         { text: 'Acciones', value: 'name', sortable: false }
       ],
 
@@ -83,11 +94,21 @@ export default {
     }
   },
   methods:{
+    ...mapActions(["notification"]),
+    buscarServicio(value){
+      this.loading = true;
+      searchServicio(value)
+        .then(data =>{
+           this.servicios = data.data.servicios;
+           this.loading = false;
+         })
+        .catch(err => console.log(err)); 
+    },
     editItem(id){
       this.$router.push(`/admin/servicios/edit/${id}`)
     },
-    deleteItem(id){
-        console.log(id);
+    detailItem(id){
+      this.$router.push(`/admin/servicios/detail/${id}`)
     }
     ,
     updatedPagination(){
@@ -105,23 +126,6 @@ export default {
 <style escoped>
 .entidades{
   padding: 16px 20px;
-}
-.estado{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.estado::before{
-  content: "";
-  display: block;
-  width: 10px;
-  height: 10px;
-  background-color: rgb(99, 87, 112);  
-  margin: 0 20px;
-  border-radius: 50%;
-}
-.estado::before {
-  background-color: #009688;
 }
 .my-paginator {
   max-width: 600px;

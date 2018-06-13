@@ -9,7 +9,10 @@ import UsuariosComponent from "@/components/UsuariosComponent";
 import AmbientesComponent from "@/components/AmbientesComponent";
 import ServiciosComponent from "@/components/ServiciosComponent";
 import ServiciosEditComponent from "@/components/ServiciosEditComponent";
+import ServiciosDetailComponent from "@/components/ServiciosDetailComponent";
 import RutasComponent from "@/components/RutasComponent";
+import RutasEditComponent from "@/components/RutasEditComponent";
+import RutasCreateComponent from "@/components/RutasCreateComponent";
 import EntidadesComponent from "@/components/EntidadesComponent";
 import NoticiasComponent from "@/components/NoticiasComponent";
 
@@ -61,6 +64,11 @@ export default new Router({
           component: ServiciosComponent
         },
         {
+          path: "servicios/detail/:id",
+          name: "detail-servicios",
+          component: ServiciosDetailComponent
+        },
+        {
           path: "servicios/edit/:id",
           name: "edit-servicios",
           component: ServiciosEditComponent
@@ -69,6 +77,16 @@ export default new Router({
           path: "rutas",
           name: "rutas",
           component: RutasComponent
+        },
+        {
+          path: "rutas/edit/:id",
+          name: "edit-rutas",
+          component: RutasEditComponent
+        },
+        {
+          path: "rutas/create",
+          name: "crear-ruta",
+          component: RutasCreateComponent
         },
         {
           path: "entidades",

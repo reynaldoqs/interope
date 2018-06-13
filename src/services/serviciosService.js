@@ -13,11 +13,6 @@ export const getServicio = id => {
 export const patchServicio = (id, datos) => {
   return axios.patch(`${SERVICES_URL}/${id}`, datos);
 };
-export const updateServicios = id => {
-  return id;
-};
-export const servicios = {
-  getServicios,
-  getServicio,
-  patchServicio
+export const searchServicio = query => {
+  return axios.get(`${SERVICES_URL}?palabraClave=${query}`);
 };

@@ -2,16 +2,14 @@
 <div class="edit-servicios">
   <edit-servicios
     :servicio="servicio"
-    v-on:onHacer="hacer"
     :formatedAmbientes="formatedAmbientes"
+    :loadingBtn="loading"
+    v-on:onSave="save"
+    v-on:onCancel="cancel"
   />
   <pre>
-    cambios:
     {{newServicio}}
-      servicio:
-    {{servicio}}
-
-    </pre>
+  </pre>
 </div>
 </template>
 
@@ -27,6 +25,7 @@ import {
 export default {
   data() {
     return {
+      loading: false,
       servicio: {},
       oldServicio:{},
       formatedAmbientes:[]
@@ -36,10 +35,22 @@ export default {
     "edit-servicios": ServiciosEditView
   },
   methods: {
-    hacer(){
+    save(){
+      this.loading= true;
       patchServicio(this.$route.params.id, this.newServicio)
-        .then(data => console.log(data))
-        .catch(err => console.log(err))
+        .then( data => {
+          this.$store.dispatch('notification',{message:'Guardado con éxito'})
+          this.loading=false;
+          this.$router.go(-1);
+        })
+        .catch(err =>{
+          let error = err.response.data.error;
+          this.$store.dispatch('notification',{message:error,dangerous:true,time:3500})
+          this.loading=false;
+        })
+    },
+    cancel(){
+      this.servicio = Object.assign(this.oldServicio);
     }
   },
   mounted() {
