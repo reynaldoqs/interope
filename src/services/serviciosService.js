@@ -16,3 +16,6 @@ export const patchServicio = (id, datos) => {
 export const searchServicio = query => {
   return axios.get(`${SERVICES_URL}?palabraClave=${query}`);
 };
+export const postServicio = datos => {
+  return axios.post(SERVICES_URL, datos);
+};

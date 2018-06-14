@@ -1,6 +1,6 @@
 <template>
   <div class="usuarios">
-    <h1>Usuarios Component</h1>
+    Usuarios component
   </div>
 </template>
 <style>

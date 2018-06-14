@@ -29,6 +29,7 @@
       <td class="text-xs-left">{{ props.item.version }}</td>
       <td class="text-xs-left">{{ props.item.baseUrl }}</td>
       <td class="text-xs-center">{{ props.item.estado }}</td>
+      <td class="text-xs-center">{{ props.item.metodo }}</td>
       <td class="text-xs-center">{{ props.item.createdAt | normalDate }}</td>
       <td class="justify-center layout px-0">
           <v-btn icon class="mx-0" @click="detailItem(props.item.id)">
@@ -77,6 +78,7 @@ export default {
         {text: 'Version', value:'version', align:'left', sortable: true},
         {text: 'URL base', value:'baseUrl',align:'left', sortable: true},
         {text: 'Estado', value:'estado',align:'center', sortable: false},
+        {text: 'Método', value: 'metodo', align: 'center', sortable: true},
         {text: 'Fecha creación', value: 'createdAt', align: 'center', sortable: true},
         { text: 'Acciones', value: 'name', sortable: false }
       ],

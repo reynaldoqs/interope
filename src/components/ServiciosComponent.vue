@@ -3,7 +3,7 @@
     <v-container align-center class="my-container my-buttons">
          <v-layout wrap>
           <v-flex sm12  md6 lg4 align-content-center>
-            <v-btn outline round color="primary" @click="notification({message: 'we are the best', dangerous: true, time:1500})">Agregar Servicio</v-btn>
+            <v-btn outline round color="primary" @click="$router.push('/admin/servicios/create')">Agregar Servicio</v-btn>
           </v-flex>
           <v-flex sm12  md6 lg4 align-content-center>
             <v-text-field

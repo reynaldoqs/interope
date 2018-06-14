@@ -10,11 +10,13 @@ import AmbientesComponent from "@/components/AmbientesComponent";
 import ServiciosComponent from "@/components/ServiciosComponent";
 import ServiciosEditComponent from "@/components/ServiciosEditComponent";
 import ServiciosDetailComponent from "@/components/ServiciosDetailComponent";
+import ServiciosCreateServicio from "@/components/ServiciosCreateServicio";
 import RutasComponent from "@/components/RutasComponent";
 import RutasEditComponent from "@/components/RutasEditComponent";
 import RutasCreateComponent from "@/components/RutasCreateComponent";
+import rutascreate2 from "@/components/rutasComponents/RutasCreateComponent";
 import EntidadesComponent from "@/components/EntidadesComponent";
-import NoticiasComponent from "@/components/NoticiasComponent";
+//import NoticiasComponent from "@/components/NoticiasComponent";
 
 Vue.use(Router);
 
@@ -64,6 +66,11 @@ export default new Router({
           component: ServiciosComponent
         },
         {
+          path: "servicios/create",
+          name: "crear-servicio",
+          component: ServiciosCreateServicio
+        },
+        {
           path: "servicios/detail/:id",
           name: "detail-servicios",
           component: ServiciosDetailComponent
@@ -96,7 +103,8 @@ export default new Router({
         {
           path: "noticias",
           name: "noticias",
-          component: NoticiasComponent
+          //component: NoticiasComponent
+          component: rutascreate2
         }
       ]
     }

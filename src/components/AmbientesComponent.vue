@@ -1,5 +1,5 @@
 <template>
   <div class="ambientes">
-    <h1>Ambientes component</h1>
+    Ambientes
   </div>
 </template>
