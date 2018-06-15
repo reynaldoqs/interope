@@ -7,21 +7,25 @@ import DashBoard from "../views/Protected/DashBoard/DashBoard";
 import CatalogoCompoent from "@/components/CatalogoComponent";
 import UsuariosComponent from "@/components/UsuariosComponent";
 import AmbientesComponent from "@/components/AmbientesComponent";
-import ServiciosComponent from "@/components/ServiciosComponent";
-import ServiciosEditComponent from "@/components/ServiciosEditComponent";
-import ServiciosDetailComponent from "@/components/ServiciosDetailComponent";
-import ServiciosCreateServicio from "@/components/ServiciosCreateServicio";
-import RutasComponent from "@/components/RutasComponent";
-import RutasEditComponent from "@/components/RutasEditComponent";
-import RutasCreateComponent from "@/components/RutasCreateComponent";
-import rutascreate2 from "@/components/rutasComponents/RutasCreateComponent";
+//Servicios
+import ServiciosMainComponent from "@/components/servicios/ServiciosMainComponent";
+import ServiciosEditComponent from "@/components/servicios/ServiciosEditComponent";
+import ServiciosDetailComponent from "@/components/servicios/ServiciosDetailComponent";
+import ServiciosCreateComponent from "@/components/servicios/ServiciosCreateComponent";
+//Rutas
+import RutasMainComponent from "@/components/rutas/RutasMainComponent";
+import RutasEditComponent from "@/components/rutas/RutasEditComponent";
+import RutasCreateComponent from "@/components/rutas/RutasCreateComponent";
+import RutasDetailComponent from "@/components/rutas/RutasDetailComponent";
+//Fin rutas
 import EntidadesComponent from "@/components/EntidadesComponent";
-//import NoticiasComponent from "@/components/NoticiasComponent";
+import NoticiasComponent from "@/components/NoticiasComponent";
 
 Vue.use(Router);
 
 export default new Router({
-  routes: [{
+  routes: [
+    {
       path: "/",
       redirect: {
         name: "login"
@@ -31,11 +35,13 @@ export default new Router({
       path: "/home",
       name: "home",
       component: Home,
-      children: [{
-        path: "catalogo",
-        name: "catalogo",
-        component: CatalogoCompoent
-      }]
+      children: [
+        {
+          path: "catalogo",
+          name: "catalogo",
+          component: CatalogoCompoent
+        }
+      ]
     },
     {
       path: "/login",
@@ -45,7 +51,8 @@ export default new Router({
     {
       path: "/admin",
       component: DashBoard,
-      children: [{
+      children: [
+        {
           path: "",
           name: "catalogo-admin",
           component: CatalogoCompoent
@@ -60,15 +67,16 @@ export default new Router({
           name: "ambientes",
           component: AmbientesComponent
         },
+        //Servicios
         {
           path: "servicios",
           name: "servicios",
-          component: ServiciosComponent
+          component: ServiciosMainComponent
         },
         {
           path: "servicios/create",
           name: "crear-servicio",
-          component: ServiciosCreateServicio
+          component: ServiciosCreateComponent
         },
         {
           path: "servicios/detail/:id",
@@ -80,10 +88,12 @@ export default new Router({
           name: "edit-servicios",
           component: ServiciosEditComponent
         },
+        //End servicios
+        //Rutas components
         {
           path: "rutas",
           name: "rutas",
-          component: RutasComponent
+          component: RutasMainComponent
         },
         {
           path: "rutas/edit/:id",
@@ -96,6 +106,12 @@ export default new Router({
           component: RutasCreateComponent
         },
         {
+          path: "rutas/detail/:id",
+          name: "detail-rutas",
+          component: RutasDetailComponent
+        },
+        //Fin rutas
+        {
           path: "entidades",
           name: "entidades",
           component: EntidadesComponent
@@ -103,8 +119,7 @@ export default new Router({
         {
           path: "noticias",
           name: "noticias",
-          //component: NoticiasComponent
-          component: rutascreate2
+          component: NoticiasComponent
         }
       ]
     }

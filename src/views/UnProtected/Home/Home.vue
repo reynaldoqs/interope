@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import NavComponent from "@/components/NavComponent";
+import NavComponent from "@/components/shared/NavComponent";
 export default {
   components: {
     NavComponent

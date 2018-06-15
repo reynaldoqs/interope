@@ -5,12 +5,10 @@ import {
   AUTH_SUCCESS,
   AUTH_LOGOUT
 } from "../actions/auth";
-import {
-  serviceLogin
-} from "@/services/loginService";
+import { serviceLogin } from "@/services/loginService";
 
 const state = {
-  user: localStorage.getItem("user") || "",
+  user: JSON.parse(localStorage.getItem("user")) || "",
   status: "",
   hasLoadedOnce: false
 };

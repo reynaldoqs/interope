@@ -80,7 +80,7 @@ export default {
         {text: 'Estado', value:'estado',align:'center', sortable: false},
         {text: 'Método', value: 'metodo', align: 'center', sortable: true},
         {text: 'Fecha creación', value: 'createdAt', align: 'center', sortable: true},
-        { text: 'Acciones', value: 'name', sortable: false }
+        {text: 'Acciones', value: 'name', sortable: false }
       ],
 
     }

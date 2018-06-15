@@ -19,13 +19,13 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 import { mapGetters } from "vuex";
 export default {
   name: "App",
-  created () {
-    if(this.$store.getters.isUserAuthenticated){
-      let token = JSON.parse(localStorage.getItem('user')).accesos.token;
+  created() {
+    if (this.$store.getters.isUserAuthenticated) {
+      let token = JSON.parse(localStorage.getItem("user")).accesos.token;
       axios.defaults.headers.common["Authorization"] = token;
     }
   },
@@ -35,10 +35,10 @@ export default {
 };
 </script>
 <style>
-.dangerous{
+.dangerous {
   color: #f44336;
 }
-.safe{
-  color: #4CAF50;
+.safe {
+  color: #4caf50;
 }
 </style>

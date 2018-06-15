@@ -1,13 +1,12 @@
 <template>
 <v-app>
   <v-navigation-drawer
-    width="200"
+    width="220"
     persistent
     v-model="drawer"
     enable-resize-watcher
     fixed
     app
-    dark
   >
     <SideBarComponent/>
     </v-navigation-drawer>
@@ -19,23 +18,22 @@
 </template>
 
 <script>
-import NavComponent from "@/components/NavComponent";
-import SideBarComponent from "@/components/SideBarComponent";
-import CatalogoComponent from "@/components/CatalogoComponent";
+import NavComponent from "@/components/shared/NavComponent";
+import SideBarComponent from "@/components/shared/SideBarComponent";
 export default {
   data() {
     return {
-      drawer: false
+      drawer: true
     };
   },
   components: {
     NavComponent,
-    SideBarComponent,
-    CatalogoComponent
+    SideBarComponent
   },
   methods: {
     changeDrawer() {
       this.drawer = !this.drawer;
+      //mejorar el drawer
     }
   }
 };
@@ -45,19 +43,18 @@ export default {
 .dash-board {
   width: 100%;
   height: 100vh;
-  background-color: aliceblue;
   display: flex;
 }
 
 .side-bar-container {
   height: 100vh;
-  background-color: blueviolet;
 }
 
 .main-container {
   width: 100%;
 }
 .my-v-content {
-  background-color: #e0e0e0;
+  /*  background-color: #e0e0e0; */
+  background-color: white;
 }
 </style>

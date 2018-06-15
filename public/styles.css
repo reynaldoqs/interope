@@ -2,8 +2,8 @@
   --inter-primary: #360023;
   --inter-secondary: #ec6d64;
   --inter-tertiary: #ef8277;
-  --inter-text-primary: #232323;
-  --inter-text-second: #454545;
+  --inter-text-primary: #353535;
+  --inter-text-secondary: #757372;
   --inter-clean-color: #fff;
 }
 
@@ -25,30 +25,41 @@ body {
   height: 10px;
   background-color: var(--inter-tertiary);
   margin: 10px 0;
-  opacity: .3;
+  opacity: 0.3;
 }
-
-.my-container {
+.footer-buttons {
+  width: 100%;
+  text-align: right;
+  padding-right: 30px;
+}
+.white-container {
   background-color: white;
 }
 
-.my-component-container {
+.inter-container {
   padding: 16px 20px;
 }
-
+.inter-h2 {
+  color: var(--inter-text-primary);
+  text-align: center;
+  font-size: 1.8rem;
+}
+.inter-p {
+  color: var(--inter-text-secondary);
+  text-align: center;
+}
 .my-auto-x-scroll {
   overflow-x: auto;
 }
 
 .my-padding-flex {
-  padding: 5px 20px;
+  padding: 5px 5px;
 }
 
 .my-step {
   width: 100%;
-  background-color: rebeccapurple;
-  height: 500px;
-  overflow-x: auto;
+  padding: 0 16px 10px 16px;
+  min-height: 400px;
 }
 
 /* Vuetify styles */
@@ -62,16 +73,47 @@ body .menu__content {
 }
 
 /* Nav-View styles - vuetify */
+/*Stilos para el side bar list*/
+/* AQUI ES DONDE TENEMOS QUE VER EL TEMA DE LA BARRA A LA IZUIQRDA DESCOLOCADA, ojo cambiando side-var-view por body funciona */
+.side-var-view .list__tile {
+  margin: 5px 0px;
+  position: relative;
+}
+.side-var-view .list__tile--active .list__tile {
+  margin: 5px 0px;
+  background-color: #360023 !important;
+}
+.side-var-view .list__tile__title {
+  color: white;
+  font-size: 1.3rem;
+}
+.side-var-view .list__tile--active .list__tile__title,
+.list__tile__action {
+  color: #eca49c !important;
+}
 
+.side-var-view .list__tile--active::before {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 42px;
+  left: 0;
+  background-color: #ef8277;
+  border-radius: 0 3px 3px 0;
+}
+/*Fin stilos side bar list*/
 body .snack__wrapper {
   background-color: var(--inter-primary);
 }
-
-.my-buttons .btn {
+.navigation-drawer {
+  background-color: var(--inter-primary) !important;
+}
+.inter-buttons .btn {
   text-transform: initial;
   font-weight: normal;
   color: var(--inter-text-primary);
   font-size: 1.1rem;
+  background: linear-gradient(to right, var(--inter-primary), #880e4f);
 }
 
 body .create .stepper,
