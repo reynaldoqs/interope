@@ -35,7 +35,16 @@ body {
 .white-container {
   background-color: white;
 }
-
+.inter-row {
+  width: 100%;
+  height: auto;
+  padding: 5px;
+}
+.to-right {
+  display: flex;
+  justify-content: flex-end;
+  justify-items: center;
+}
 .inter-container {
   padding: 16px 20px;
 }

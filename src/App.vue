@@ -13,8 +13,6 @@
       <v-icon class="dangerous" v-if="dangerous">error</v-icon>
       <v-icon class="safe" v-else>check_circle</v-icon>
     </v-snackbar>
-    <pre>
-    </pre>
 </div>
 </template>
 
