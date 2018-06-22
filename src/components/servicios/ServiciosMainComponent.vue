@@ -10,12 +10,13 @@
         </v-flex>
         <div class="my-spacer"></div>
         <v-flex sm12 class="my-auto-x-scroll">
-          <v-data-table :headers="headers" :items="servicios" hide-actions :loading="loading">
+          
+          <v-data-table  dark :headers="headers" :items="servicios" hide-actions :loading="loading">
             <v-progress-linear slot="progress" height="2" color="secondary"></v-progress-linear>
   
             <template slot="items" slot-scope="props">
           <td>{{ props.item.datosEntidad.siglaEntidad }}</td>
-          <td class="text-xs-left">{{ props.item.datosEntidad.descripcionEntidad }}</td>
+          <td class="text-xs-left">{{ props.item.nombre }}</td>
           <td class="text-xs-left">{{ props.item.codigo }}</td>
           <td class="text-xs-center">{{ props.item.estado }}</td>
           <td class="text-xs-center">{{ props.item.fechaRegistro | normalDate }}</td>
@@ -64,7 +65,7 @@ export default {
           value: "siglaEntidad"
         },
         {
-          text: "Descripción entidad",
+          text: "Nombre entidad",
           value: "descripcion",
           align: "left",
           sortable: true

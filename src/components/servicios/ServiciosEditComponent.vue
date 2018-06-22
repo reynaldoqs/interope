@@ -51,7 +51,7 @@ export default {
         });
     },
     cancel() {
-      this.servicio = Object.assign(this.oldServicio);
+      this.$router.go(-1);
     }
   },
   mounted() {

@@ -15,50 +15,51 @@
         <v-layout wrap>
   
           <v-flex sm12 md6 lg4 align-content-center class="my-padding-flex">
-            <v-text-field v-model="servicio.codigo" label="Codigo" required></v-text-field>
+            <v-text-field v-model="servicio.codigo" label="Codigo" :rules="[rules.req, rules.max50]"></v-text-field>
+          </v-flex>
+
+          <v-flex sm12 md6 lg4 align-content-center class="my-padding-flex">
+            <v-text-field v-model="servicio.nombre" :rules="[rules.req]" label="Nombre entidad"></v-text-field>
+          </v-flex>
+
+          <v-flex sm12 md6 lg4 align-content-center class="my-padding-flex">
+           <v-select :items="estados" v-model="servicio.estado" :rules="[rules.req]" label="Estado"></v-select>
+          </v-flex>
+          
+  
+          <v-flex sm12 md6 lg4 align-content-center class="my-padding-flex">
+            <v-text-field v-model="servicio.descripcion" label="Descripcion" :rules="[rules.req, rules.max500]" multi-line rows=5></v-text-field>
           </v-flex>
   
           <v-flex sm12 md6 lg4 align-content-center class="my-padding-flex">
-            <v-text-field v-model="servicio.estado" label="Estado" required></v-text-field>
-          </v-flex>
-  
-          <v-flex sm12 md6 lg4 align-content-center class="my-padding-flex">
-            <v-text-field name="input-7-1" label="Label Text"></v-text-field>
-          </v-flex>
-  
-          <v-flex sm12 md6 lg4 align-content-center class="my-padding-flex">
-            <v-text-field v-model="servicio.descripcion" label="Descripcion" required multi-line rows=5></v-text-field>
-          </v-flex>
-  
-          <v-flex sm12 md6 lg4 align-content-center class="my-padding-flex">
-            <v-select :items="formatedAmbientes" v-model="servicio.ambientes" label="Ambientes" item-text="name" item-value="id" multiple chips max-height="auto" autocomplete>
+            <v-select :items="formatedAmbientes" v-model="servicio.ambientes" :rules="[rules.req]" label="Ambientes" item-text="name" item-value="id" multiple chips max-height="auto" autocomplete>
               <template slot="selection" slot-scope="data">
-                  <v-chip
-                    :selected="data.selected"
-                    :key="JSON.stringify(data.item)"
-                    close
-                    class="chip--select-multi"
-                    @input="data.parent.selectItem(data.item)"
-                  >
-                    {{ data.item.name }}
-                  </v-chip>
-</template>
+                      <v-chip
+                        :selected="data.selected"
+                        :key="JSON.stringify(data.item)"
+                        close
+                        class="chip--select-multi"
+                        @input="data.parent.selectItem(data.item)"
+                      >
+                        {{ data.item.name }}
+                      </v-chip>
+            </template>
 
-<template slot="item" slot-scope="data">
-  <template v-if="typeof data.item !== 'object'">
-                    <v-list-tile-content v-text="data.item"></v-list-tile-content>
-</template>
+              <template slot="item" slot-scope="data">
+                <template v-if="typeof data.item !== 'object'">
+                                      <v-list-tile-content v-text="data.item"></v-list-tile-content>
+              </template>
 
-<template v-else>
-  <v-list-tile-avatar>
-    <v-icon color="pink darken-4" v-html="data.item.icono"></v-icon>
-  </v-list-tile-avatar>
-  <v-list-tile-content>
-    <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
-    <v-list-tile-sub-title><span class="my-ip">{{data.item.servidor}}</span> {{data.item.url}}</v-list-tile-sub-title>
-  </v-list-tile-content>
-</template>
-          </template>
+              <template v-else>
+                <v-list-tile-avatar>
+                  <v-icon color="pink darken-4" v-html="data.item.icono"></v-icon>
+                </v-list-tile-avatar>
+                <v-list-tile-content>
+                  <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
+                  <v-list-tile-sub-title><span class="my-ip">{{data.item.servidor}}</span> {{data.item.url}}</v-list-tile-sub-title>
+                </v-list-tile-content>
+              </template>
+                        </template>
         </v-select>
     </v-flex>
 
@@ -67,7 +68,7 @@
           v-model="servicio.protocolos"
           :items="items"
           label="Protocolos"
-          chips
+           multiple
           tags
         ></v-select>
     </v-flex>
@@ -138,7 +139,7 @@
       round
       type="submit"
       :loading="loadingBtn"
-      :disabled="loadingBtn"
+      :disabled="!valid"
       class="white--text">
                     Guardar
     <v-icon
@@ -155,6 +156,7 @@
 
 <script>
 /* eslint-disable */
+import rules from "@/config/formRules";
 export default {
   data() {
     return {
@@ -162,7 +164,8 @@ export default {
       menu2: false,
       valid: true,
       select: null,
-      items: ["http", "https", "udp"]
+      items: ["http", "https", "udp"],
+      estados: ["REGISTRADO", "ACTIVO", "INACTIVO", "OBSOLETO", "EN MANTENIMIENTO"]
     };
   },
   props: {
@@ -182,6 +185,11 @@ export default {
     },
     cancel() {
       this.$emit("onCancel");
+    }
+  },
+  computed:{
+    rules(){
+      return rules;
     }
   }
 };
