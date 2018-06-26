@@ -1,6 +1,6 @@
 <template>
   <div class="inter-container">
-    <ServicioSCreateView :model="model"  v-on:onSave="save"/>
+    <ServicioSCreateView :model="model"  v-on:onSave="save" v-on:onCancel="$router.go(-1)"/>
     <pre>
       {{model}}
     </pre>
@@ -13,18 +13,16 @@ export default {
   data(){
     return {
       model:{
-        codigo: "iop-servicios-fundempresa PRUEBA",
+        codigo: "",
         descripcion: "",
         nombre:'',
-        protocolos: [
-        ],
         palabrasClave: [
         ],
         ambientes: [
         ],
-        datosEntidad:{
-          id:'5b1e99371103702ea87fe133'
-        }
+        datosEntidad:{},
+        fechaInicioDisponibilidad: null,
+        fechaFinDisponibilidad: null,
       }
     }
   },
@@ -32,9 +30,7 @@ export default {
     ServicioSCreateView
   },
   methods:{
-    save(plc){
-      console.log('save This');
-      this.model.palabrasClave = plc;
+    save(){
       postServicio(this.model).then(data => {
         this.$store.dispatch('notification',{message: 'Servicio guardado'})
       }).catch(err => {
@@ -45,3 +41,9 @@ export default {
   }
 }
 </script>
+<style>
+.inter-container{
+  padding: 20px;
+}
+</style>
+

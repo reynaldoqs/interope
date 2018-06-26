@@ -1,7 +1,7 @@
 <template>
   <v-toolbar app color="white">
     <v-toolbar-side-icon @click.stop="changeDrawer" v-if="isLoggedIn"></v-toolbar-side-icon>
-    <v-toolbar-items class="hidden-sm-and-down my-buttons">
+    <v-toolbar-items class="hidden-sm-and-down">
       <v-btn flat append to="/catalogo">Catálogo</v-btn>
       <v-btn v-if="!isLoggedIn" flat append to="/dashboard">dashboard</v-btn>
     </v-toolbar-items>

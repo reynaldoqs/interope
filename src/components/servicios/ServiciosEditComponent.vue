@@ -5,7 +5,7 @@
     :formatedAmbientes="formatedAmbientes"
     :loadingBtn="loading"
     v-on:onSave="save"
-    v-on:onCancel="cancel" />
+    v-on:onCancel="$router.go(-1)" />
     <pre>
       {{newServicio}}
     </pre>
@@ -49,9 +49,6 @@ export default {
           });
           this.loading = false;
         });
-    },
-    cancel() {
-      this.$router.go(-1);
     }
   },
   mounted() {

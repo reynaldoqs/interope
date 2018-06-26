@@ -1,5 +1,5 @@
 <template>
-<v-app>
+<v-app dark>
   <v-navigation-drawer
     width="220"
     persistent
@@ -55,6 +55,6 @@ export default {
 }
 .my-v-content {
   /*  background-color: #e0e0e0; */
-  background-color: white;
+  background-color: #313131;
 }
 </style>

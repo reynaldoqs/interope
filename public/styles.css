@@ -22,7 +22,7 @@ body {
 /* Estipos para tablas */
 
 /*pruebas*/
-
+/* 
 tr {
 	background-color: #263238;
 	cursor: pointer;
@@ -36,7 +36,7 @@ tr {
 td {
 	padding: 20px 0 !important;
 	height: 10px;
-}
+} */
 /* end pruebas */
 td[data-metodo="POST"] {
 	color: #ffc107;
@@ -51,6 +51,14 @@ td[data-metodo="GET"] {
 	font-weight: 900 !important;
 }
 td[data-metodo="DELETE"] {
+	color: #f44336;
+	font-weight: 900 !important;
+}
+td[data-metodo="Conectado"] {
+	color: #00c853;
+	font-weight: 900 !important;
+}
+td[data-metodo="NO conectado"] {
 	color: #f44336;
 	font-weight: 900 !important;
 }
@@ -176,7 +184,6 @@ body .snack__wrapper {
 	font-weight: normal;
 	color: var(--inter-text-primary);
 	font-size: 1.1rem;
-	background: linear-gradient(to right, var(--inter-primary), #880e4f);
 }
 
 body .create .stepper,

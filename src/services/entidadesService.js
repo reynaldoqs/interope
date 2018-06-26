@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 export default {
-	getAmbientes(limit = 10, page = 1) {
+	getEntidades(limit = 10, page = 1) {
 		return axios
-			.get(`https://test.agetic.gob.bo/apigateway/ambientes?limite=${limit}&pagina=${page}`)
+			.get(`https://test.agetic.gob.bo/apigateway/entidades?limite=${limit}&pagina=${page}`)
 			.then((data) => {
 				return data.data;
 			})
