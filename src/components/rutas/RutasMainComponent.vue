@@ -1,140 +1,97 @@
 <template>
-  <div class="rutas-view inter-container">
-    <v-container align-center class="white-container">
-      <v-layout wrap>
-  
-        <v-flex sm12 md6 lg4 align-content-center class="inter-buttons">
-          <v-btn round color="primary" @click="$router.push('/admin/rutas/create')">Agregar Ruta</v-btn>
-        </v-flex>
-        <v-flex sm12 md6 lg4 align-content-center>
-          <v-text-field @input="value => buscarRuta(value)" append-icon="search" label="Buscar ruta" hide-details></v-text-field>
-        </v-flex>
-        <div class="my-spacer"></div>
-        <v-flex sm12 class="my-auto-x-scroll">
-          <v-data-table :headers="headers" dark :items="rutas" hide-actions :loading="loading">
-            <v-progress-linear slot="progress" height="2" color="secondary"></v-progress-linear>
-  
-          <template slot="items" slot-scope="props" @click="$router.push(`/admin/rutas/detail/${props.item.id}`)">
-            <td>{{ props.item.nombre}}</td>
-            <td class="text-xs-left">{{ props.item.version }}</td>
-            <td class="text-xs-left">{{ props.item.baseUrl }}</td>
-            <td class="text-xs-center" :data-metodo="props.item.metodo">{{ props.item.metodo }}</td>
-            <td class="text-xs-center">{{ props.item.estado }}</td>
-            <td class="justify-center layout px-0">
-                <v-btn icon class="mx-0" @click="$router.push(`/admin/rutas/detail/${props.item.id}`)">
-                  <v-icon color="pink darken-4">visibility</v-icon>
-                </v-btn>
-                <v-btn icon class="mx-0" @click="$router.push(`/admin/rutas/edit/${props.item.id}`)">
-                  <v-icon color="teal">edit</v-icon>
-                </v-btn>
-              </td>
-          </template>
-
-<template slot="no-data">
-  <v-alert slot="no-results" outline :value="true" color="error" icon="warning">
-    No existen resultados.
-  </v-alert>
-</template>
-  </v-data-table>
-</v-flex>
-      <div class="text-xs-center pt-2 my-paginator" @click="updatedPagination" v-if="pages > 1">
-      <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+  <div>
+      <search-bar v-on:onInput="search">
+        <h2>Rutas</h2>
+        <v-btn flat round>Agregar ruta<v-icon right>add</v-icon></v-btn>
+      </search-bar>
+      <div class="inter-card-container">
+        <v-card>
+          <v-card-title>
+          <!--  <span class="headline">Configuración del ambiente</span> -->
+          </v-card-title>
+    
+          <v-card-text>
+            <data-table-view
+              tipo="rutas"
+              :loading="loading"
+              :datos="requestData"
+              v-on:onUpdatePagination="updatePagination"></data-table-view>
+          </v-card-text>
+        </v-card>
       </div>
-         </v-layout>
-    </v-container>
   </div>
 </template>
 
 <script>
-  import {
-    getRutas,
-    searchRuta
-  } from "@/services/rutasService";
-  export default {
-    data() {
-      return {
-        loading: false,
-        pages: 1,
-        pagination: {
-          page: 1
-        },
-        rutas: [],
-        headers: [{
-            text: "Nombre de la ruta",
-            align: "left",
-            sortable: false,
-            value: "nombre"
-          },
-          {
-            text: "Version",
-            value: "version",
-            align: "left",
-            sortable: true
-          },
-          {
-            text: "URL base",
-            value: "baseUrl",
-            align: "left",
-            sortable: true
-          },
-          {
-            text: "Método",
-            value: "metodo",
-            align: "center",
-            sortable: true
-          },
-          {
-            text: "Estado",
-            value: "estado",
-            align: "center",
-            sortable: false
-          },
-          {
-            text: "Acciones",
-            value: "name",
-            sortable: false
-          }
-        ]
-      };
+import rutasApi from "@/services/rutasService";
+import DataTableView from "@/components/shared/DataTableView";
+import SearchBar from "@/components/shared/SearchBar";
+
+export default {
+  data() {
+    return {
+      dataToSearch: "asdad",
+      dataview: {},
+      requestData: {},
+      loading: true,
+      searchValue: ""
+    };
+  },
+  methods: {
+    search(value) {
+      this.searchValue = value;
+      this.callApi();
     },
-    mounted() {
+    updatePagination(pagination) {
+      this.callApi(pagination);
+    },
+    callApi(pagination = "") {
       this.loading = true;
-      getRutas()
-        .then(data => {
-          this.pagination.page = data.data.pagina;
-          this.pages = data.data.totalPaginas;
-          this.rutas = data.data.rutas;
-          this.loading = false;
-        })
-        .catch(err => console.log(err));
-    },
-    methods: {
-      buscarRuta(value) {
-        this.loading = true;
-        searchRuta(value)
-          .then(data => {
-            this.rutas = data.data.rutas;
-            this.loading = false;
-          })
-          .catch(err => console.log(err));
-      },
-      updatedPagination() {
-        this.loading = true;
-        getRutas(10, this.pagination.page)
-          .then(data => {
-            this.pagination.page = data.data.pagina;
-            this.pages = data.data.totalPaginas;
-            this.rutas = data.data.rutas;
-            this.loading = false;
-          })
-          .catch(err => console.log(err));
+      //la paginacion se lanza a buscar en el API cada vez que el search cambia la paginacion, el if es para evitar ese comportamiento
+      if (this.searchValue.length > 1) {
+        rutasApi
+          .searchRuta(this.searchValue)
+          .then(data => this.formatData(data));
+      } else {
+        let limite =
+          pagination.rowsPerPage === -1
+            ? this.requestData.totalItems
+            : pagination.rowsPerPage;
+        let pagina = pagination.page;
+
+        rutasApi.getRutas(limite, pagina).then(data => this.formatData(data));
       }
+    },
+    formatData(data) {
+      //mejorar con graphql...
+      let headers = ["Nombre Ruta", "Versión", "URL base", "Método", "Acción"];
+      this.requestData = {
+        totalItems: data.totalRutas,
+        items: data.rutas.map(data => {
+          let formated = {
+            data1: data.nombre,
+            data2: data.version,
+            data3: data.baseUrl,
+            data4: data.metodo,
+            id: data.id
+          };
+          return formated;
+        }),
+        headers: headers.map(data => {
+          let header = {
+            text: data,
+            align: "left",
+            sortable: true
+          };
+          return header;
+        })
+      };
+      this.loading = false;
     }
-  };
+  },
+  components: {
+    DataTableView,
+    SearchBar
+  }
+};
 </script>
-<style>
-.my-paginator {
-  max-width: 800px;
-  margin: 0 auto;
-}
-</style>

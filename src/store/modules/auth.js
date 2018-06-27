@@ -5,7 +5,7 @@ import {
   AUTH_SUCCESS,
   AUTH_LOGOUT
 } from "../actions/auth";
-import { serviceLogin } from "@/services/loginService";
+import loginApi from "@/services/loginService";
 
 const state = {
   user: JSON.parse(localStorage.getItem("user")) || "",
@@ -40,7 +40,8 @@ const actions = {
   login: (context, creds) => {
     context.commit(AUTH_REQUEST);
     return new Promise((resolve, reject) => {
-      serviceLogin(creds)
+      loginApi
+        .serviceLogin(creds)
         .then(data => {
           let user = data.data;
           localStorage.setItem("user", JSON.stringify(user));

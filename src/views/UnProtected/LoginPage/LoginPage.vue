@@ -37,18 +37,10 @@ export default {
   methods: {
     ...mapActions(["logout", "notification"]),
     login(creds) {
-      this.$store
-        .dispatch("login", creds)
-        .then(() => {
-          this.notification({ message: "login successful" });
-          this.$router.push("/admin");
-        })
-        .catch(err =>
-          this.$store.dispatch("notification", {
-            message: "Login error",
-            dangerous: true
-          })
-        );
+      this.$store.dispatch("login", creds).then(() => {
+        this.notification({ message: "login successful" });
+        this.$router.push("/admin");
+      });
     }
   },
   computed: {

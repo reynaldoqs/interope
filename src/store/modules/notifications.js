@@ -1,7 +1,4 @@
-import {
-  DO_NOTIFICATION,
-  CLOSE_NOTIFICAITON
-} from "../actions/notifications";
+import { DO_NOTIFICATION, CLOSE_NOTIFICAITON } from "../actions/notifications";
 
 const state = {
   snackbarOn: false,

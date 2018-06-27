@@ -1,54 +1,64 @@
-import axios from 'axios';
-
+import axios from "axios";
+import notificationApi from "@/utils/showNotification";
 export default {
-	getAmbientes(limit = 10, page = 1) {
-		return axios
-			.get(`https://test.agetic.gob.bo/apigateway/ambientes?limite=${limit}&pagina=${page}`)
-			.then((data) => {
-				return data.data;
-			})
-			.catch((err) => {
-				return err.response.data.error;
-			});
-	} /* 
-  getServicio(id) {
+  getAmbientes(limit = 10, page = 1) {
     return axios
-      .get(`/servicios/${id}`)
+      .get(`/ambientes?limite=${limit}&pagina=${page}`)
       .then(data => {
         return data.data;
       })
       .catch(err => {
-        return err.response.data.error;
+        let error = err.response.data.error;
+        notificationApi.showError(error);
+        return error;
       });
   },
-  patchServicio(id, data) {
+  getAmbiente(id) {
     return axios
-      .patch(`/servicios/${id}`, data)
+      .get(`/ambientes/${id}`)
       .then(data => {
         return data.data;
       })
       .catch(err => {
-        return err.response.data.error;
+        let error = err.response.data.error;
+        notificationApi.showError(error);
+        return error;
       });
   },
-  searchServicio(query) {
+  patchAmbiente(id, data) {
     return axios
-      .get(`/servicios?palabraClave=${query}`)
+      .patch(`/ambientes/${id}`, data)
       .then(data => {
         return data.data;
       })
       .catch(err => {
-        return err.response.data.error;
+        let error = err.response.data.error;
+        notificationApi.showError(error);
+        return error;
       });
   },
-  postServicio(data) {
+  searchAmbiente(query) {
     return axios
-      .post(`/servicios`, data)
+      .get(`/ambientes?palabraClave=${query}`)
       .then(data => {
         return data.data;
       })
       .catch(err => {
-        return err.response.data.error;
+        let error = err.response.data.error;
+        notificationApi.showError(error);
+        return error;
       });
-  } */
+  },
+  postAmbiente(data) {
+    return axios
+      .post(`/ambientes`, data)
+      .then(data => {
+        return data.data;
+      })
+      .catch(err => {
+        let error = err.response.data.error;
+        notificationApi.showError(error);
+        return error;
+      });
+  }
 };

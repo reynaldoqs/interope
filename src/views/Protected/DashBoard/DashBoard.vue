@@ -7,6 +7,7 @@
     enable-resize-watcher
     fixed
     app
+    mini-variant
   >
     <SideBarComponent/>
     </v-navigation-drawer>
@@ -40,19 +41,6 @@ export default {
 </script>
 
 <style scoped>
-.dash-board {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-}
-
-.side-bar-container {
-  height: 100vh;
-}
-
-.main-container {
-  width: 100%;
-}
 .my-v-content {
   /*  background-color: #e0e0e0; */
   background-color: #313131;

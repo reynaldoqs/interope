@@ -21,21 +21,21 @@
 </template>
 
 <script>
-import {getServicios} from '../services/serviciosService';
-import CatalogoCard from './CatalogoCard'
+import serviciosApi from "../services/serviciosService";
+import CatalogoCard from "./CatalogoCard";
 export default {
   data() {
     return {
       servicios: []
-    }
+    };
   },
   components: {
     "a-card": CatalogoCard
   },
   mounted() {
-    getServicios().then(data => {
-      this.servicios = data.data.servicios
-    }).catch(err => console.log(err));
+    serviciosApi.getServicios().then(data => {
+      this.servicios = data.servicios;
+    });
   }
 };
 </script>

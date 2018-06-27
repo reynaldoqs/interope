@@ -4,12 +4,6 @@
       <div class="top-options">
   
       </div>
-      <img :src="`https://api.adorable.io/avatar/80/${user.nombres}`">
-      <h3 class="user-name">
-        <span class="nombre">{{user.nombres}}</span>
-        <span class="apellido">{{user.primerApellido}}</span>
-      </h3>
-      <p class="user-rol">{{user.rol}}</p>
     </div>
     <v-list dark class="my-list">
       <v-list-tile value="true" v-for="(link, i) in links" :key="i" :to="link.to">
@@ -73,58 +67,6 @@ export default {
 <style scoped>
 .my-list {
   background-color: transparent !important;
-}
-.user-info {
-  width: 100%;
-  height: 240px;
-  /* usar color para ajustar el tamaño */
-  text-align: center;
-  position: relative;
-}
-
-.user-info img {
-  border-radius: 50%;
-}
-
-.user-info.active:before {
-  content: "";
-  width: 20px;
-  height: 20px;
-  background-color: #00c853;
-  position: absolute;
-  top: 125px;
-  border-radius: 50%;
-  left: 125px;
-}
-.user-name {
-  line-height: 16px;
-  font-size: 1.5rem;
-  color: aliceblue;
-  margin: 10px 0 0 0;
-}
-.nombre {
-  text-transform: lowercase;
-  display: inline-block;
-  margin-right: 5px;
-}
-
-.nombre::first-letter {
-  text-transform: uppercase;
-}
-.apellido {
-  text-transform: lowercase;
-  display: inline-block;
-}
-.apellido::first-letter {
-  text-transform: uppercase;
-}
-.user-rol {
-  color: #a1a2a2;
-  text-transform: lowercase;
-}
-
-.user-rol::first-letter {
-  text-transform: uppercase;
 }
 
 .top-options {

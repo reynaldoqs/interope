@@ -61,19 +61,19 @@
               <v-text-field  :rules="[rules.req, rules.ip]" v-model="ambienteModel.ipServidor" label="IP"></v-text-field>
             </v-flex>
             <v-flex xs6>
-              <v-subheader>ACL<small class="instructions"> Some instructions AF AF!</small> </v-subheader>
+              <v-subheader>ACL<small class="instructions">(Action Control List)</small></v-subheader>
             </v-flex>
             <v-flex xs6>
                <v-checkbox v-model="ambienteModel.acl"></v-checkbox>
             </v-flex>
             <v-flex xs6>
-              <v-subheader>JWT</v-subheader>
+              <v-subheader>JWT<small class="instructions">(Json Web Token)</small></v-subheader>
             </v-flex>
             <v-flex xs6>
               <v-checkbox v-model="ambienteModel.jwt"></v-checkbox>
             </v-flex>
             <v-flex xs6>
-              <v-subheader>EXP</v-subheader>
+              <v-subheader>EXP<small class="instructions">(Expiration)</small></v-subheader>
             </v-flex>
             <v-flex xs6>
               <v-checkbox v-model="ambienteModel.exp"></v-checkbox>
@@ -93,63 +93,65 @@
 </template>
 
 <script>
-  import rules from "@/config/formRules";
-  import ambientesApi from "@/services/ambientesService";
-  export default {
-    data() {
-      return {
-        validModal:true,
-        ambienteModel: {
-          acl: false,
-          jwt: false,
-          exp: false
-        },
-        ambientes:[],
-        protocolos: ['https', 'http'],
-      }
-    },
-    props: {
-      dialog: {
-        type: Boolean
-      }
-    },
-    methods:{
-      save(){
-        let newAmbiente = Object.assign({},this.ambienteModel);
-        this.$emit('onSave', newAmbiente);
-        this.ownReset();
-        this.$emit('onCancel');
+import rules from "@/config/formRules";
+import ambientesApi from "@/services/ambientesService";
+export default {
+  data() {
+    return {
+      validModal: true,
+      ambienteModel: {
+        acl: false,
+        jwt: false,
+        exp: false
       },
-      cancel(){
-        this.$refs.formModal.reset();
-        this.ownReset();
-        this.$emit('onCancel');
-      },
-      ownReset(){
-        this.$refs.formModal.reset();
-        this.ambienteModel.acl = false,
-        this.ambienteModel.jwt = false,
-        this.ambienteModel.exp = false
-      }
+      ambientes: [],
+      protocolos: ["https", "http"]
+    };
+  },
+  props: {
+    dialog: {
+      type: Boolean
+    }
+  },
+  methods: {
+    save() {
+      let newAmbiente = Object.assign({}, this.ambienteModel);
+      this.$emit("onSave", newAmbiente);
+      this.ownReset();
+      this.$emit("onCancel");
     },
-    mounted(){
-        ambientesApi.getAmbientes().then(data => {
-          this.ambientes = data.ambientes;
-        }).catch(err => {
-          console.log(err);
-        })
+    cancel() {
+      this.$refs.formModal.reset();
+      this.ownReset();
+      this.$emit("onCancel");
     },
-    computed:{
-      rules() {
-        return rules
-      }
+    ownReset() {
+      this.$refs.formModal.reset();
+      (this.ambienteModel.acl = false),
+        (this.ambienteModel.jwt = false),
+        (this.ambienteModel.exp = false);
+    }
+  },
+  mounted() {
+    ambientesApi
+      .getAmbientes()
+      .then(data => {
+        this.ambientes = data.ambientes;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  },
+  computed: {
+    rules() {
+      return rules;
     }
   }
+};
 </script>
 <style scoped>
-.instructions{
+.instructions {
   font-weight: lighter;
   margin-left: 5px;
 }
-
 </style>

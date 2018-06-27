@@ -1,18 +1,64 @@
-import axios from 'axios';
-import { RUTAS_URL } from '@/config/config';
-
-export const getRutas = (limit = 10, page = 1) => {
-	return axios.get(`${RUTAS_URL}?limite=${limit}&pagina=${page}`);
-};
-export const getRuta = (id) => {
-	return axios.get(`${RUTAS_URL}/${id}`);
-};
-export const patchRuta = (id, datos) => {
-	return axios.patch(`${RUTAS_URL}/${id}`, datos);
-};
-export const searchRuta = (query) => {
-	return axios.get(`${RUTAS_URL}?nombre=${query}`);
-};
-export const postRuta = (datos) => {
-	return axios.post(RUTAS_URL, datos);
+import axios from "axios";
+import notificationApi from "@/utils/showNotification";
+export default {
+  getRutas(limit = 10, page = 1) {
+    return axios
+      .get(`/rutas?limite=${limit}&pagina=${page}`)
+      .then(data => {
+        return data.data;
+      })
+      .catch(err => {
+        let error = err.response.data.error;
+        notificationApi.showError(error);
+        return error;
+      });
+  },
+  getRuta(id) {
+    return axios
+      .get(`/rutas/${id}`)
+      .then(data => {
+        return data.data;
+      })
+      .catch(err => {
+        let error = err.response.data.error;
+        notificationApi.showError(error);
+        return error;
+      });
+  },
+  patchRuta(id, data) {
+    return axios
+      .patch(`/rutas/${id}`, data)
+      .then(data => {
+        return data.data;
+      })
+      .catch(err => {
+        let error = err.response.data.error;
+        notificationApi.showError(error);
+        return error;
+      });
+  },
+  searchRuta(query) {
+    return axios
+      .get(`/rutas?palabraClave=${query}`)
+      .then(data => {
+        return data.data;
+      })
+      .catch(err => {
+        let error = err.response.data.error;
+        notificationApi.showError(error);
+        return error;
+      });
+  },
+  postRuta(data) {
+    return axios
+      .post(`/rutas`, data)
+      .then(data => {
+        return data.data;
+      })
+      .catch(err => {
+        let error = err.response.data.error;
+        notificationApi.showError(error);
+        return error;
+      });
+  }
 };

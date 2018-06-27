@@ -1,5 +1,5 @@
 <template>
-<div class="nav-component">
+<div>
     <NavView
         :isLoggedIn="isUserAuthenticated"
         v-on:onLogout="logout"
@@ -23,7 +23,7 @@ export default {
       this.$emit("changeDrawer");
     },
     logout() {
-      this.$store.dispatch('logout');
+      this.$store.dispatch("logout");
       this.$router.push("/login");
     },
     toLogin() {

@@ -1,5 +1,5 @@
 <template>
-  <div class="create-view">
+  <div class="inter-card-container">
     <v-card>
        <v-form ref="form" @submit.prevent="save" v-model="valid">
       <v-card-title>
@@ -170,7 +170,7 @@
           <v-btn color="pink" flat
             type="submit"
             :disabled="!valid"
-            @click="save" >Guardar</v-btn>
+            @click.native="save" >Guardar</v-btn>
         </v-card-actions>
       </v-card-actions>
        </v-form>
@@ -180,80 +180,82 @@
 </template>
 
 <script>
-  import rules from '@/config/formRules';
-  import ServiciosCreateModalComponent from '@/components/servicios/ServiciosCreateModalComponent'
-  import entidadesApi from '@/services/entidadesService';
-  export default {
-    data() {
-      return {
-        menu1: false,
-        menu2: false,
-        entidades:[],
-        valid: true,
-        palabra: '',
-        arrayPalabras: [],
-        modal: false,
-      }
-    },
-    props: {
-      model: {
-        type: Object
-      },
-    },
-    methods: {
-      save() {
-        this.$emit('onSave');
-      },
-      cancel(){
-        this.$emit('onCancel');
-      },
-      cancelModal(){
-        this.modal = false;
-      },
-      addPalabra() {
-        if(!this.arrayPalabras.includes(this.palabra)){
-          this.$refs.pc.valid ? this.arrayPalabras.push(this.palabra) : console.log('Dato no valido'); 
-        }
-        //un error al hacer reset
-        this.$refs.pc.reset()
-      
-      },
-      saveAmbiente(ambiente){
-        //siguiente codigo,solo porque el emitter de vue emite 2 veces
-        if(!Object.values(ambiente).some(val => typeof val === 'object')){
-        this.model.ambientes.push(ambiente);
-        }    
-      }
-    },
-    computed: {
-      rules() {
-        return rules;
-      }
-    },
-    mounted() {
-      this.model.palabrasClave = this.arrayPalabras;
-
-      entidadesApi.getEntidades(150).then(data => {
-        this.entidades = data.entidades.map(entidad => {
-          return entidad = {
-              datosToBeDispatched:{
-              id: entidad.id,
-              numeroEntidad: entidad.entidad,
-              descripcionEntidad: entidad.desEntidad,
-              siglaEntidad: entidad.siglaEntidad
-            },  
-            siglaEntidad: entidad.siglaEntidad,
-            desEntidad: entidad.desEntidad,
-            urlImagen: entidad.urlImagen
-          
-          }
-        })
-
-      })
-    },
-    components: {
-      ModalComponent: ServiciosCreateModalComponent
+import rules from "@/config/formRules";
+import ServiciosCreateModalComponent from "@/components/servicios/ServiciosCreateModalComponent";
+import entidadesApi from "@/services/entidadesService";
+export default {
+  data() {
+    return {
+      menu1: false,
+      menu2: false,
+      entidades: [],
+      valid: true,
+      palabra: "",
+      arrayPalabras: [],
+      modal: false
+    };
+  },
+  props: {
+    model: {
+      type: Object
     }
+  },
+  methods: {
+    save() {
+      this.$emit("onSave");
+    },
+    cancel() {
+      this.$emit("onCancel");
+    },
+    cancelModal() {
+      this.modal = false;
+    },
+    addPalabra() {
+      if (!this.arrayPalabras.includes(this.palabra)) {
+        this.$refs.pc.valid
+          ? this.arrayPalabras.push(this.palabra)
+          : console.log("Dato no valido");
+      }
+      //un error al hacer reset
+      this.$refs.pc.reset();
+    },
+    saveAmbiente(ambiente) {
+      //siguiente codigo,solo porque el emitter de vue emite 2 veces
+      if (!Object.values(ambiente).some(val => typeof val === "object")) {
+        this.model.ambientes.push(ambiente);
+      }
+    }
+  },
+  computed: {
+    rules() {
+      return rules;
+    }
+  },
+  mounted() {
+    this.model.palabrasClave = this.arrayPalabras;
+
+    entidadesApi.getEntidades(150).then(data => {
+      this.entidades = data.entidades.map(entidad => {
+        return (entidad = {
+          datosToBeDispatched: {
+            id: entidad.id,
+            numeroEntidad: entidad.entidad,
+            descripcionEntidad: entidad.desEntidad,
+            siglaEntidad: entidad.siglaEntidad
+          },
+          siglaEntidad: entidad.siglaEntidad,
+          desEntidad: entidad.desEntidad,
+          urlImagen: entidad.urlImagen
+        });
+      });
+    });
+  },
+  components: {
+    ModalComponent: ServiciosCreateModalComponent
+  },
+  beforeDestroy() {
+    this.$off("onSave");
   }
+};
 </script>
 

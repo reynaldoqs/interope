@@ -1,21 +1,67 @@
 import axios from "axios";
-import {
-  SERVICES_URL
-}
-from '@/config/config';
-
-export const getServicios = (limit = 10, page = 1) => {
-  return axios.get(`${SERVICES_URL}?limite=${limit}&pagina=${page}`);
-};
-export const getServicio = id => {
-  return axios.get(`${SERVICES_URL}/${id}`);
-};
-export const patchServicio = (id, datos) => {
-  return axios.patch(`${SERVICES_URL}/${id}`, datos);
-};
-export const searchServicio = query => {
-  return axios.get(`${SERVICES_URL}?palabraClave=${query}`);
-};
-export const postServicio = datos => {
-  return axios.post(SERVICES_URL, datos);
+import notificationApi from "@/utils/showNotification";
+export default {
+  getServicios(limit = 10, page = 1) {
+    return axios
+      .get(`/servicios?limite=${limit}&pagina=${page}`)
+      .then(data => {
+        return data.data;
+      })
+      .catch(err => {
+        let error = err.response.data.error;
+        notificationApi.showError(error);
+        return error;
+      });
+  },
+  getServicio(id) {
+    return axios
+      .get(`/servicios/${id}`)
+      .then(data => {
+        return data.data;
+      })
+      .catch(err => {
+        let error = err.response.data.error;
+        notificationApi.showError(error);
+        return error;
+      });
+  },
+  patchServicio(id, data) {
+    return axios
+      .patch(`/servicios/${id}`, data)
+      .then(data => {
+        notificationApi.showSuccessful("Servicio corregido correctamente");
+        return data.data;
+      })
+      .catch(err => {
+        let error = err.response.data.error;
+        notificationApi.showError(error);
+        return error;
+      });
+  },
+  searchServicio(query) {
+    return axios
+      .get(`/servicios?palabraClave=${query}`)
+      .then(data => {
+        return data.data;
+      })
+      .catch(err => {
+        let error = err.response.data.error;
+        notificationApi.showError(error);
+        return error;
+      });
+  },
+  postServicio(data) {
+    console.log("llegamos aqui una vez");
+    return axios
+      .post(`/servicios`, data)
+      .then(data => {
+        notificationApi.showSuccessful("Servicio guardado correctamente");
+        return data.data;
+      })
+      .catch(err => {
+        let error = err.response.data.error;
+        notificationApi.showError(error);
+        return error;
+      });
+  }
 };
